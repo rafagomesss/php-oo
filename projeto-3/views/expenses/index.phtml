@@ -24,8 +24,8 @@
                     <td>R$ <?= number_format($expense['value'], 2, ',', '.');?></td>
                     <td><?= (new \DateTime($expense['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></td>
                     <td>
-                        <a href="#" class="btn btn-light">Editar</a>
-                        <a href="#" class="btn btn-danger">Excluir</a>
+                        <a href="<?= HOME;?>/myexpenses/edit/<?= $expense['id'];?>" class="btn btn-light">Editar</a>
+                        <a href="<?= HOME;?>/myexpenses/remove/<?= $expense['id'];?>" class="btn btn-danger">Excluir</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

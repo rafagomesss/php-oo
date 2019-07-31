@@ -45,7 +45,6 @@ abstract class Entity
 
         $sql .= $where;
 
-
         $get = $this->bind($sql, $conditions);
         $get->execute();
 
