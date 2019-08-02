@@ -30,8 +30,15 @@ class Session
         return isset($_SESSION[$key]);
     }
 
-    public static function destroy($key)
+    public static function get($key)
     {
+        self::sessionStart();
+        return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
+    }
+
+    public static function destroy()
+    {
+        self::sessionStart();
         session_destroy();
     }
 }

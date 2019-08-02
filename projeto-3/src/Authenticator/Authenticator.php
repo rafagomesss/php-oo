@@ -35,8 +35,6 @@ class Authenticator
 
     public function logout()
     {
-        if (Session::has('user')) {
-            Session::remove('user');
-        }
+        Session::destroy();
     }
 }
