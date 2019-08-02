@@ -1,6 +1,7 @@
 <?php
 namespace Code\Controller;
 
+use Code\Authenticator\CheckUserLogged;
 use Code\DB\Connection;
 use Code\Entity\Category;
 use Code\Entity\Expense;
@@ -9,6 +10,15 @@ use Code\View\View;
 
 class MyExpensesController
 {
+    use CheckUserLogged;
+
+    public function __construct()
+    {
+        if (!$this->check()) {
+            die('Usuário não logado!');
+        }
+    }
+
     public function index()
     {
         $view = new View('expenses' . DIRECTORY_SEPARATOR . 'index.phtml');
