@@ -19,4 +19,4 @@ define('DB_NAME', 'oo_blog');
 define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'root');
 define('DB_PASSWORD', '');
-define('DB_CHARSET', 'UTF-8');
+define('DB_CHARSET', 'UTF8');

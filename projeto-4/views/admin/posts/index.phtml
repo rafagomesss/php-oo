@@ -1,0 +1,38 @@
+<div class="row justify-content-center mt-4">
+    <div class="col">
+        <h2>POSTS <small>Gerencie suas postagens</small></h2>
+        <hr>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-8">
+        <?php require VIEWS_PATH . 'includes' . DIRECTORY_SEPARATOR . 'messages.phtml'; ?>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Criado em</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->posts as $post) :?>
+                <tr>
+                    <td><?= $post['id'];?></td>
+                    <td><?= $post['title'];?></td>
+                    <td><?= (new \DateTime($post['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></td>
+                    <td>
+                        <a href="<?= HOME;?>/posts/edit/<?= $post['id'];?>" class="btn btn-light">Editar</a>
+                        <a href="<?= HOME;?>/posts/remove/<?= $post['id'];?>" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

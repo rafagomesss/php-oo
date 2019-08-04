@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-6">
+        <h2>CADASTRAR NOVA DESPESA</h2>
+        <hr>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form method="POST" action="<?= HOME;?>/posts/edit/<?=$this->post['id'];?>">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Título</label>
+                <input name="title" type="text" class="form-control form-control-sm" value="<?=$this->post['title'];?>">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Descrição</label>
+                <input name="description" type="text" class="form-control form-control-sm" value="<?=$this->post['description'];?>">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Conteúdo</label>
+                <textarea name="content" class="form-control" rows="3"><?=$this->post['content'];?></textarea>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Slug</label>
+                <input name="slug" type="text" class="form-control form-control-sm" value="<?=$this->post['slug'];?>">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tipo</label>
+                <select name="type" class="form-control form-control-sm">
+                    <option value="">Selecione o tipo do conteúdo</option>
+                    <option value="post" <?php if ($this->post['type'] == 'post') : ?> selected <?php endif; ?>>Post</option>
+                    <option value="page" <?php if ($this->post['type'] == 'page') : ?> selected <?php endif; ?>>Página</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Tipo</label>
+                <select name="user_id" class="form-control form-control-sm">
+                    <option value="">Selecione o autor</option>
+                    <?php foreach($this->users as $user) : ?>
+                        <option value="<?=$user['id']?>"
+                            <?php if ($this->post['user_id'] == $user['id']) : ?> selected <?php endif; ?>
+                        ><?=$user['first_name'] . ' ' . $user['last_name'];?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success btn-sm float-right">Salvar Post</button>
+        </form>
+    </div>
+</div>

@@ -77,7 +77,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `created_at`, `updated_at`)
 VALUES
-	(1,'Nanderson','Castro Edited','nandokstro@gmail.com','NandoKstroNet','123456','2018-05-02 20:10:36','2019-01-05 14:56:31'),
+	(1,'Nanderson','Castro Edited','nandokstro@gmail.com','NandoKstroNet','123456','2018-05-02 20:10:36','2019-01-05 14:56:31');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
