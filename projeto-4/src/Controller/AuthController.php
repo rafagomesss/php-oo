@@ -22,7 +22,7 @@ class AuthController
                 return header('Location: ' . HOME . '/auth/login');
             }
             Flash::add('success', 'Usuário logado com sucesso!');
-            return header('Location: ' . HOME . '/myexpenses');
+            return header('Location: ' . HOME . '/');
         }
         $view = new View('auth' . DIRECTORY_SEPARATOR . 'index.phtml');
         return $view->render();

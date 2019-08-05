@@ -10,6 +10,7 @@ define('CSS_PATH', ASSETS_PATH .  'css' . DIRECTORY_SEPARATOR);
 define('JS_PATH', ASSETS_PATH .  'js' . DIRECTORY_SEPARATOR);
 
 define('HOME', 'http://localhost:3000');
+define('APP_DEBUG', true);
 
 /**
  * Database config
@@ -18,5 +19,5 @@ define('HOME', 'http://localhost:3000');
 define('DB_NAME', 'oo_blog');
 define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'root');
 define('DB_CHARSET', 'UTF8');

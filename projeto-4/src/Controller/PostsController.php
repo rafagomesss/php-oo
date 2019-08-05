@@ -5,6 +5,8 @@ use Code\DB\Connection;
 use Code\Entity\Post;
 use Code\Entity\User;
 use Code\Session\Flash;
+use Code\Security\Validator\Sanitizer;
+use Code\Security\Validator\Validator;
 use Code\View\View;
 
 class PostsController
@@ -19,46 +21,103 @@ class PostsController
 
     public function new()
     {
-        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') {
-            $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        try {
+            if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') {
+                $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $post = new Post(Connection::getInstance());
+                $data = Sanitizer::sanitizeData($data, Post::$filters);
 
-            if (!$post->insert($data)) {
-                Flash::add('danger', 'Erro ao criar conteúdo!');
-                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'new');
+                if (!Validator::validateRequiredFields($data)) {
+                    Flash::add('warning', 'Preencha todos os campos!');
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'new');
+                }
+
+                $post = new Post(Connection::getInstance());
+
+                if (!$post->insert($data)) {
+                    Flash::add('danger', 'Erro ao criar conteúdo!');
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'new');
+                }
+                Flash::add('success', 'Postagem criada com sucesso!');
+                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
+
             }
-            Flash::add('success', 'Postagem criada com sucesso!');
+
+            $view = new View('admin' . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'new.phtml');
+            $view->users = (new User(Connection::getInstance()))->findAll('id, first_name, last_name');
+            return $view->render();
+        } catch (\Exception $e) {
+            if (APP_DEBUG) {
+                Flash::add('danger', $e->getMessage());
+                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
+            }
+            Flash::add('danger', 'Ocorreu um problema interno, por favor contacte o administrador.');
             return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
-
         }
-
-        $view = new View('admin' . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'new.phtml');
-        $view->users = (new User(Connection::getInstance()))->findAll('id, first_name, last_name');
-        return $view->render();
     }
 
     public function edit($id = null)
     {
-        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') {
-            $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data['id'] = $id;
+        try {
+            if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') {
+                $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $post = new Post(Connection::getInstance());
+                $data = Sanitizer::sanitizeData($data, Post::$filters);
 
-            if (!$post->update($data)) {
-                Flash::add('danger', 'Erro ao atualizar postagem!');
+                $data['id'] = (int) $id;
+
+                if (!Validator::validateRequiredFields($data)) {
+                    Flash::add('warning', 'Preencha todos os campos!');
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'edit' . DIRECTORY_SEPARATOR . $id);
+                }
+
+                $post = new Post(Connection::getInstance());
+
+                if (!$post->update($data)) {
+                    Flash::add('danger', 'Erro ao atualizar postagem!');
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . $id);
+                }
+                Flash::add('success', 'Postagem atualizada com sucesso!');
                 return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . $id);
             }
-            Flash::add('success', 'Postagem atualizada com sucesso!');
-            return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . $id);
+
+            $view = new View('admin' . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'edit.phtml');
+            $view->post = (new Post(Connection::getInstance()))->find($id);
+            $view->users = (new User(Connection::getInstance()))->findAll('id, first_name, last_name');
+
+            return $view->render();
+
+        } catch (\Exception $e) {
+            if (APP_DEBUG) {
+                Flash::add('danger', $e->getMessage());
+                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
+            }
+            Flash::add('danger', 'Ocorreu um problema interno, por favor contacte o administrador.');
+            return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
         }
-
-        $view = new View('admin' . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'edit.phtml');
-        $view->post = (new Post(Connection::getInstance()))->find($id);
-        $view->users = (new User(Connection::getInstance()))->findAll('id, first_name, last_name');
-
-        return $view->render();
     }
 
-}
+        public function remove($id = null)
+        {
+            try {
+                $post = new Post(Connection::getInstance());
+
+                if (!$post->delete($id)) {
+                    Flash::add('danger', 'Erro ao realizar remoção da postagem');
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
+                }
+
+                Flash::add('success', 'Postagem removida com sucesso!');
+                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
+            } catch (\Exception $e) {
+                if (APP_DEBUG) {
+                    Flash::add('danger', $e->getMessage());
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
+                }
+                Flash::add('danger', 'Ocorreu um problema interno, por favor contacte o administrador.');
+                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'posts');
+            }
+
+        }
+
+    }

@@ -1,0 +1,40 @@
+<div class="row justify-content-center mt-4">
+    <div class="col">
+        <h2>USUÁRIOS <small>Gerenciamento de usuários</small></h2>
+        <hr>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-8">
+        <?php require VIEWS_PATH . 'includes' . DIRECTORY_SEPARATOR . 'messages.phtml'; ?>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Criado em</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->users as $user) :?>
+                <tr>
+                    <td><?= $user['id'];?></td>
+                    <td><?= $user['first_name'] . ' ' . $user['first_name'];?></td>
+                    <td><?= $user['email'];?></td>
+                    <td><?= (new \DateTime($user['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></td>
+                    <td>
+                        <a href="<?= HOME;?>/users/edit/<?= $user['id'];?>" class="btn btn-light">Editar</a>
+                        <a href="<?= HOME;?>/users/remove/<?= $user['id'];?>" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

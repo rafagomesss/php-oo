@@ -4,13 +4,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Projeto 3 - Controle de Gastos</title>
+        <title>Projeto 4 - Blog</title>
         <link type="text/css" rel="stylesheet" href="<?= CSS_PATH;?>bootstrap.min.css">
     </head>
     <body>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
-                <a class="navbar-brand" href="<?= HOME;?>/">Code Experts Learning - Catálogo</a>
+                <a class="navbar-brand" href="<?= HOME;?>/">Code Experts Learning - Blog</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -21,7 +21,10 @@
                             <a class="nav-link" href="<?= HOME;?>/">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= HOME;?>/posts">Blog</a>
+                            <a class="nav-link" href="<?= HOME;?>/posts">Posts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= HOME;?>/users">Usuários</a>
                         </li>
                         <?php if (\Code\Session\Session::has('user')) : ?>
                             <li class="nav-item">
