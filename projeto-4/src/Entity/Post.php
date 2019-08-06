@@ -6,7 +6,7 @@ use Code\DB\Entity;
 class Post extends Entity
 {
     protected $table = 'posts';
-    static $filters = [
+    public static $filters = [
         'title' => FILTER_SANITIZE_STRING,
         'description' => FILTER_SANITIZE_STRING,
         'content' => FILTER_SANITIZE_STRING,

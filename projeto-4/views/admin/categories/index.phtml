@@ -1,6 +1,6 @@
 <div class="row justify-content-center mt-4">
     <div class="col">
-        <h2>POSTS <small>Gerencie suas postagens</small></h2>
+        <h2>CATEGORIAS <small>Gerencie suas categorias</small></h2>
         <hr>
     </div>
 </div>
@@ -9,7 +9,7 @@
         <?php require VIEWS_PATH . 'includes' . DIRECTORY_SEPARATOR . 'messages.phtml'; ?>
     </div>
     <div class="col-4">
-        <a href="<?= HOME;?>/posts/new" class="btn btn-sm float-right btn-primary py-1">Novo Post</a>
+        <a href="<?= HOME;?>/categories/new" class="btn btn-sm float-right btn-primary py-1">Nova Categoria</a>
     </div>
 </div>
 <div class="row justify-content-center mt-4">
@@ -18,20 +18,20 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Título</th>
+                    <th>Nome</th>
                     <th>Criado em</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($this->posts as $post) :?>
+                <?php foreach($this->categories as $category) :?>
                 <tr>
-                    <td><?= $post['id'];?></td>
-                    <td><?= $post['title'];?></td>
-                    <td><?= (new \DateTime($post['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></td>
+                    <td><?= $category['id'];?></td>
+                    <td><?= $category['name'];?></td>
+                    <td><?= (new \DateTime($category['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></td>
                     <td>
-                        <a href="<?= HOME;?>/posts/edit/<?= $post['id'];?>" class="btn btn-light">Editar</a>
-                        <a href="<?= HOME;?>/posts/remove/<?= $post['id'];?>" class="btn btn-danger">Excluir</a>
+                        <a href="<?= HOME;?>/categories/edit/<?= $category['id'];?>" class="btn btn-light">Editar</a>
+                        <a href="<?= HOME;?>/categories/remove/<?= $category['id'];?>" class="btn btn-danger">Excluir</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

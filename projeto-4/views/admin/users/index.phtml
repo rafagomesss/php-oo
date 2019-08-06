@@ -4,12 +4,15 @@
         <hr>
     </div>
 </div>
-<div class="row justify-content-center">
+<div class="row">
     <div class="col-8">
         <?php require VIEWS_PATH . 'includes' . DIRECTORY_SEPARATOR . 'messages.phtml'; ?>
     </div>
+    <div class="col-4">
+        <a href="<?= HOME;?>/users/new" class="btn btn-sm float-right btn-primary py-1">Novo Usuário</a>
+    </div>
 </div>
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-4">
     <div class="col">
         <table class="table">
             <thead>
