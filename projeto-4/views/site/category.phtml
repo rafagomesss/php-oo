@@ -5,10 +5,21 @@
 </div>
 <div class="row mt-4">
     <div class="col-8">
-        <h2><?= $this->post['title'];?></h2>
-        <small>Criado em <?= (new \DateTime($this->post['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></small>
+        <h1><?= $this->category;?></h1>
         <hr>
-        <p><?= $this->post['description'];?></p>
+        <?php foreach($this->posts as $post) : ?>
+            <div class="row">
+                <div class="col">
+                    <h2>
+                        <a href="<?= HOME . DIRECTORY_SEPARATOR . 'post' . DIRECTORY_SEPARATOR . $post['slug'];?>" title="">
+                            <?= $post['title'];?>
+                        </a>
+                    </h2>
+                    <small>Criado em <?= (new \DateTime($post['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></small>
+                    <p><?= $post['description'];?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
     </div>
     <div class="col-4 px-5">
         <h3>Sidebar</h3>

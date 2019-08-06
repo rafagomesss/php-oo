@@ -1,4 +1,14 @@
 <?php require VIEWS_PATH . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'messages.phtml';?>
+<div class="col-12">
+    <ul class="nav nav-pills">
+        <?php foreach ($this->categories as $category) : ?>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= HOME . DIRECTORY_SEPARATOR . 'category' . DIRECTORY_SEPARATOR . $category['slug'];?>"><?=$category['name'];?></a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<hr>
 <div class="jumbotron">
     <h1 class="display-4">Blog</h1>
     <p class="lead">
