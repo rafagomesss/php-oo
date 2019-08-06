@@ -1,3 +1,4 @@
+<?php require VIEWS_PATH . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'messages.phtml';?>
 <div class="jumbotron">
     <h1 class="display-4">Blog</h1>
     <p class="lead">
@@ -14,7 +15,7 @@
                     <?= $post['title'];?>
                 </a>
             </h2>
-            <small><?= $post['created_at'];?></small>
+            <small>Criado em <?= (new \DateTime($post['created_at'], new \DateTimeZone('America/Sao_Paulo')))->format("d/m/Y H:i:s");?></small>
             <p><?= $post['description'];?></p>
         </div>
     <?php endforeach; ?>
