@@ -3,9 +3,10 @@ namespace Code\Controller;
 
 use Code\DB\Connection;
 use Code\Entity\User;
-use Code\Session\Flash;
+use Code\Security\PasswordHash;
 use Code\Security\Validator\Sanitizer;
 use Code\Security\Validator\Validator;
+use Code\Session\Flash;
 use Code\View\View;
 
 class UsersController
@@ -31,7 +32,19 @@ class UsersController
                     return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'new');
                 }
 
+                if (!Validator::validatePasswordMinStringLenght($data['password'])) {
+                    Flash::add('warning', 'Senha deve conter pelo menos 6 (seis) caracteres!');
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'new');
+                }
+
+                if (!Validator::validatePasswordConfirm($data['password'], $data['password_confirm'])) {
+                    Flash::add('warning', 'Senhas não conferem!');
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'new');
+                }
+
                 $post = new User(Connection::getInstance());
+
+                $data['password'] = PasswordHash::hash($data['password']);
 
                 unset($data['password_confirm']);
 
@@ -72,16 +85,33 @@ class UsersController
                     return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'edit' . DIRECTORY_SEPARATOR . $id);
                 }
 
-                $post = new User(Connection::getInstance());
+
+                if ($data['password']) {
+                    if (!Validator::validatePasswordMinStringLenght($data['password'])) {
+                        Flash::add('warning', 'Senha deve conter pelo menos 6 (seis) caracteres!');
+                        return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'edit' . DIRECTORY_SEPARATOR . $id);
+                    }
+
+                    if (!Validator::validatePasswordConfirm($data['password'], $data['password_confirm'])) {
+                        Flash::add('warning', 'Senhas não conferem!');
+                        return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'edit' . DIRECTORY_SEPARATOR . $id);
+                    }
+
+                    $data['password'] = PasswordHash::hash($data['password']);
+
+                } else {
+                    unset($data['password']);
+                }
 
                 unset($data['password_confirm']);
+                $post = new User(Connection::getInstance());
 
                 if (!$post->update($data)) {
                     Flash::add('danger', 'Erro ao atualizar usuário!');
-                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . $id);
+                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'edit' . DIRECTORY_SEPARATOR . $id);
                 }
                 Flash::add('success', 'Usuário atualizado com sucesso!');
-                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . $id);
+                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
             }
 
             $view = new View('admin' . DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . 'edit.phtml');
@@ -99,27 +129,27 @@ class UsersController
         }
     }
 
-        public function remove($id = null)
-        {
-            try {
-                $post = new User(Connection::getInstance());
+    public function remove($id = null)
+    {
+        try {
+            $post = new User(Connection::getInstance());
 
-                if (!$post->delete($id)) {
-                    Flash::add('danger', 'Erro ao realizar remoção do usuário');
-                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
-                }
-
-                Flash::add('success', 'Usuário removido com sucesso!');
-                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
-            } catch (\Exception $e) {
-                if (APP_DEBUG) {
-                    Flash::add('danger', $e->getMessage());
-                    return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
-                }
-                Flash::add('danger', 'Ocorreu um problema interno, por favor contacte o administrador.');
+            if (!$post->delete($id)) {
+                Flash::add('danger', 'Erro ao realizar remoção do usuário');
                 return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
             }
 
+            Flash::add('success', 'Usuário removido com sucesso!');
+            return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
+        } catch (\Exception $e) {
+            if (APP_DEBUG) {
+                Flash::add('danger', $e->getMessage());
+                return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
+            }
+            Flash::add('danger', 'Ocorreu um problema interno, por favor contacte o administrador.');
+            return header('Location:' . HOME . DIRECTORY_SEPARATOR . 'users');
         }
 
     }
+
+}
