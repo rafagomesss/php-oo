@@ -6,6 +6,16 @@
     <hr class="my-4">
     <a class="btn btn-primary btn-lg" href="/" role="button">Saiba Mais</a>
 </div>
-<div class="row">
-   
+<div class="row justify-content-center">
+    <?php foreach ($this->posts as $post) : ?>
+        <div class="col-4 text-center">
+            <h2>
+                <a href="<?= HOME . DIRECTORY_SEPARATOR . 'post' . DIRECTORY_SEPARATOR . $post['slug'];?>" title="">
+                    <?= $post['title'];?>
+                </a>
+            </h2>
+            <small><?= $post['created_at'];?></small>
+            <p><?= $post['description'];?></p>
+        </div>
+    <?php endforeach; ?>
 </div>
