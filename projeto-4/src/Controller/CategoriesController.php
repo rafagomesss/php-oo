@@ -1,6 +1,7 @@
 <?php
 namespace Code\Controller;
 
+use Code\Authenticator\CheckUserLogged;
 use Code\DB\Connection;
 use Code\Entity\Category;
 use Code\Security\Validator\Sanitizer;
@@ -10,6 +11,14 @@ use Code\View\View;
 
 class CategoriesController
 {
+    use CheckUserLogged;
+
+    public function __construct()
+    {
+        if (!$this->check()) {
+            return header('Location: ' . HOME . '/auth/login');
+        }
+    }
 
     public function index()
     {

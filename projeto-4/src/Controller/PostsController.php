@@ -1,16 +1,26 @@
 <?php
 namespace Code\Controller;
 
+use Code\Authenticator\CheckUserLogged;
 use Code\DB\Connection;
+use Code\Entity\Category;
 use Code\Entity\Post;
 use Code\Entity\User;
-use Code\Session\Flash;
 use Code\Security\Validator\Sanitizer;
 use Code\Security\Validator\Validator;
+use Code\Session\Flash;
 use Code\View\View;
 
 class PostsController
 {
+    use CheckUserLogged;
+
+    public function __construct()
+    {
+        if (!$this->check()) {
+            return header('Location: ' . HOME . '/auth/login');
+        }
+    }
 
     public function index()
     {
@@ -45,6 +55,7 @@ class PostsController
 
             $view = new View('admin' . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'new.phtml');
             $view->users = (new User(Connection::getInstance()))->findAll('id, first_name, last_name');
+            $view->categories = (new Category(Connection::getInstance()))->findAll('id, name');
             return $view->render();
         } catch (\Exception $e) {
             if (APP_DEBUG) {
@@ -84,6 +95,7 @@ class PostsController
             $view = new View('admin' . DIRECTORY_SEPARATOR . 'posts' . DIRECTORY_SEPARATOR . 'edit.phtml');
             $view->post = (new Post(Connection::getInstance()))->find($id);
             $view->users = (new User(Connection::getInstance()))->findAll('id, first_name, last_name');
+            $view->categories = (new Category(Connection::getInstance()))->findAll('id, name');
 
             return $view->render();
 

@@ -20,16 +20,16 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="<?= HOME;?>/">Home <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= HOME;?>/posts">Posts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= HOME;?>/categories">Categorias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= HOME;?>/users">Usuários</a>
-                        </li>
                         <?php if (\Code\Session\Session::has('user')) : ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= HOME;?>/posts">Posts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= HOME;?>/categories">Categorias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= HOME;?>/users">Usuários</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= HOME;?>/auth/logout">Sair</a>
                             </li>

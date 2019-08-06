@@ -2,6 +2,7 @@
 namespace Code\Authenticator;
 
 use Code\Entity\User;
+use Code\Security\PasswordHash;
 use Code\Session\Session;
 
 class Authenticator
@@ -23,7 +24,7 @@ class Authenticator
             return false;
         }
 
-        if ($user['password'] != $credentials['password']) {
+        if (!PasswordHash::check($credentials['password'], $user['password'])) {
             return false;
         }
 

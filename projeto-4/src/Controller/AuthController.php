@@ -32,6 +32,6 @@ class AuthController
     {
         $auth = (new Authenticator())->logout();
         Flash::add('success', 'Usuário deslogado!');
-        return header('Location: ' . HOME . '/auth/login');
+        return header('Location: ' . HOME);
     }
 }
