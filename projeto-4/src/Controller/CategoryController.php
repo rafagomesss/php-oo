@@ -21,7 +21,7 @@ class CategoryController
 
             return $view->render();
         } catch (\Exception $e) {
-            Flash::add('warning', 'Categoria não encontrada!');
+            Flash::add('warning', 'Nenhum post da categoria "' . $category['name'] . '" foi encontrado!');
             return header('Location: ' . HOME);
         }
     }

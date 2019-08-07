@@ -1,6 +1,7 @@
 <?php
 namespace Code\Controller;
 
+use Ausi\SlugGenerator\SlugGenerator;
 use Code\Authenticator\CheckUserLogged;
 use Code\DB\Connection;
 use Code\Entity\Category;
@@ -41,6 +42,8 @@ class CategoriesController
                 }
 
                 $post = new Category(Connection::getInstance());
+
+                $data['slug'] = (new SlugGenerator())->generate($data['name']);
 
                 if (!$post->insert($data)) {
                     Flash::add('danger', 'Erro ao criar categoria!');

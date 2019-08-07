@@ -5,5 +5,8 @@
         {
             "Code\\": "src/"
         }
+    },
+    "require": {
+        "ausi/slug-generator": "^1.1"
     }
 }

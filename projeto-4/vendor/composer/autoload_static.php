@@ -11,6 +11,10 @@ class ComposerStaticInit7fcbf072a039d7c20d977b85ade71b0c
         array (
             'Code\\' => 5,
         ),
+        'A' => 
+        array (
+            'Ausi\\SlugGenerator\\' => 19,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -18,10 +22,10 @@ class ComposerStaticInit7fcbf072a039d7c20d977b85ade71b0c
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-    );
-
-    public static $classMap = array (
-        'Code\\Controller\\HomeController' => __DIR__ . '/../..' . '/src/Controller/HomeController.php',
+        'Ausi\\SlugGenerator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ausi/slug-generator/src',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -29,7 +33,6 @@ class ComposerStaticInit7fcbf072a039d7c20d977b85ade71b0c
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit7fcbf072a039d7c20d977b85ade71b0c::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit7fcbf072a039d7c20d977b85ade71b0c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit7fcbf072a039d7c20d977b85ade71b0c::$classMap;
 
         }, null, ClassLoader::class);
     }
