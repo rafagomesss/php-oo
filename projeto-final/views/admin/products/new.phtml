@@ -1,0 +1,62 @@
+<?php require VIEWS_PATH . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'header.phtml'; ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Criar Produto</h2>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <form action="<?= HOME;?>/admin/products/new" method="POST">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Nome do produto</label>
+                        <input name="name" class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <input name="description" class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea name="content" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Preço</label>
+                                <input name="price" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status produto</label>
+                                <select name="is_active" class="form-control">
+                                    <option value="1">Ativo</option>
+                                    <option value="0">Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-lg btn-success pull-right">Criar Produto</button>
+                </div>
+            </form>
+
+
+        </div>
+
+    </div>
+<?php require VIEWS_PATH . 'admin/includes/footer.phtml';?>
