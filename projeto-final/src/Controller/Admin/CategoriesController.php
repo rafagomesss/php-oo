@@ -46,11 +46,11 @@ class CategoriesController
 
 				if(!$post->insert($data)) {
 					Flash::add('error', 'Erro ao criar categoria!');
-					return header('Location: ' . HOME . '/categories/new');
+					return header('Location: ' . HOME . '/admin/categories/new');
 				}
 
 				Flash::add('success', 'Categoria criada com sucesso!');
-				return header('Location: ' . HOME . '/categories');
+				return header('Location: ' . HOME . '/admin/categories');
 			}
 
 			$view = new View('admin/categories/new.phtml');

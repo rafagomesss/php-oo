@@ -9,7 +9,7 @@ class ProductsController
 {
     public function index()
     {
-        $view = new View('admin' . DIRECTORY_SEPARATOR . 'products' . DIRECTORY_SEPARATOR . 'index.phtml');
+        $view = new View('admin' . DS . 'products' . DS . 'index.phtml');
         $view->products = (new Product(Connection::getInstance()))->findAll();
 
         return $view->render();
@@ -17,7 +17,7 @@ class ProductsController
 
     public function new()
     {
-        return (new View('admin' . DIRECTORY_SEPARATOR . 'products' . DIRECTORY_SEPARATOR . 'new.phtml'))->render();
+        return (new View('admin' . DS . 'products' . DS . 'new.phtml'))->render();
     }
 
 

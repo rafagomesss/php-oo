@@ -1,9 +1,9 @@
-<?php require VIEWS_PATH . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'header.phtml'; ?>
+<?php require VIEWS_PATH . DS . 'admin' . DS . 'includes' . DS . 'header.phtml'; ?>
 <div class="container">
 	<div class="col-md-12">
 		<h1>
             Usuário - <small>Gerencie seus usuários</small>
-            <a href="<?=HOME . '/users/new';?>" class="btn btn-success pull-right">Criar Novo Usuário</a>
+            <a href="<?=HOME . '/admin/users/new';?>" class="btn btn-success pull-right">Criar Novo Usuário</a>
         </h1>
 		<hr>
 	</div>
@@ -29,10 +29,10 @@
 				<td><?=$p['first_name'];?></td>
 				<td><?=date('d/m/Y H:i:s', strtotime($p['created_at']));?></td>
 				<td>
-					<a href="<?=HOME;?>/users/edit/<?=$p['id'];?>" class="btn btn-default">
+					<a href="<?=HOME;?>/admin/users/edit/<?=$p['id'];?>" class="btn btn-default">
 						Editar
 					</a>
-					<a href="<?=HOME;?>/users/remove/<?=$p['id'];?>" class="btn btn-danger">
+					<a href="<?=HOME;?>/admin/users/remove/<?=$p['id'];?>" class="btn btn-danger">
 						Excluir
 					</a>
 				</td>

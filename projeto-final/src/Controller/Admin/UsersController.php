@@ -38,17 +38,17 @@ class UsersController
 
 				if(!Validator::validateRequiredFields($data)) {
 					Flash::add('warning', 'Preencha todos os campos!');
-					return header('Location: ' . HOME . '/users/new');
+					return header('Location: ' . HOME . '/admin/users/new');
 				}
 
 				if(!Validator::validatePasswordMinStringLenght($data['password'])) {
 					Flash::add('warning', 'Senha deve conter pelo menos 6 caracteres!');
-					return header('Location: ' . HOME . '/users/new');
+					return header('Location: ' . HOME . '/admin/users/new');
 				}
 
 				if(!Validator::validatePasswordConfirm($data['password'], $data['password_confirm'])) {
 					Flash::add('warning', 'Senhas não conferem!');
-					return header('Location: ' . HOME . '/users/new');
+					return header('Location: ' . HOME . '/admin/users/new');
 				}
 
 
@@ -59,11 +59,11 @@ class UsersController
 
 				if(!$post->insert($data)) {
 					Flash::add('error', 'Erro ao criar usuário!');
-					return header('Location: ' . HOME . '/users/new');
+					return header('Location: ' . HOME . '/admin/users/new');
 				}
 
 				Flash::add('success', 'Usuário criado com sucesso!');
-				return header('Location: ' . HOME . '/users');
+				return header('Location: ' . HOME . '/admin/users');
 			}
 
 			$view = new View('admin/users/new.phtml');
@@ -73,10 +73,10 @@ class UsersController
 		} catch (\Exception $e) {
 			if(APP_DEBUG) {
 				Flash::add('error', $e->getMessage());
-				return header('Location: ' . HOME . '/users');
+				return header('Location: ' . HOME . '/admin/users');
 			}
 			Flash::add('error', 'Ocorreu um problema interno, por favor contacte o admin.');
-			return header('Location: ' . HOME . '/users');
+			return header('Location: ' . HOME . '/admin/users');
 		}
 	}
 
@@ -93,7 +93,7 @@ class UsersController
 				if ( ! Validator::validateRequiredFields( $data ) ) {
 					Flash::add( 'warning', 'Preencha todos os campos!' );
 
-					return header( 'Location: ' . HOME . '/users/edit/' . $id );
+					return header( 'Location: ' . HOME . '/admin/users/edit/' . $id );
 				}
 
 				$post = new User(Connection::getInstance());
@@ -101,12 +101,12 @@ class UsersController
 				if($data['password']) {
 					if(!Validator::validatePasswordMinStringLenght($data['password'])) {
 						Flash::add('warning', 'Senha deve conter pelo menos 6 caracteres!');
-						return header('Location: ' . HOME . '/users/new');
+						return header('Location: ' . HOME . '/admin/users/new');
 					}
 
 					if(!Validator::validatePasswordConfirm($data['password'], $data['password_confirm'])) {
 						Flash::add('warning', 'Senhas não conferem!');
-						return header('Location: ' . HOME . '/users/new');
+						return header('Location: ' . HOME . '/admin/users/new');
 					}
 
 					$data['password'] = PasswordHash::hash($data['password']);
@@ -119,12 +119,12 @@ class UsersController
 				if (!$post->update($data)) {
 					Flash::add('error', 'Erro ao atualizar usuário!');
 
-					return header('Location: ' . HOME . '/users/edit/' . $id);
+					return header('Location: ' . HOME . '/admin/users/edit/' . $id);
 				}
 
 				Flash::add('success', 'Usuário atualizado com sucesso!');
 
-				return header('Location: ' . HOME . '/users/edit/' . $id);
+				return header('Location: ' . HOME . '/admin/users/edit/' . $id);
 			}
 
 			$view        = new View('admin/users/edit.phtml');
@@ -134,10 +134,10 @@ class UsersController
 		} catch (\Exception $e) {
 			if(APP_DEBUG) {
 				Flash::add('error', $e->getMessage());
-				return header('Location: ' . HOME . '/users');
+				return header('Location: ' . HOME . '/admin/users');
 			}
 			Flash::add('error', 'Ocorreu um problema interno, por favor contacte o admin.');
-			return header('Location: ' . HOME . '/users');
+			return header('Location: ' . HOME . '/admin/users');
 		}
 	}
 
@@ -148,19 +148,19 @@ class UsersController
 
 			if(!$post->delete($id)) {
 				Flash::add('error', 'Erro ao realizar remoção do usuário!');
-				return header('Location: ' . HOME . '/users');
+				return header('Location: ' . HOME . '/admin/users');
 			}
 
 			Flash::add('success', 'Usuário removido com sucesso!');
-			return header('Location: ' . HOME . '/users');
+			return header('Location: ' . HOME . '/admin/users');
 
 		} catch (\Exception $e) {
 			if(APP_DEBUG) {
 				Flash::add('error', $e->getMessage());
-				return header('Location: ' . HOME . '/users');
+				return header('Location: ' . HOME . '/admin/users');
 			}
 			Flash::add('error', 'Ocorreu um problema interno, por favor contacte o admin.');
-			return header('Location: ' . HOME . '/users');
+			return header('Location: ' . HOME . '/admin/users');
 		}
 	}
 }
