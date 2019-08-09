@@ -7,8 +7,10 @@
         <hr>
     </div>
 
-    <div class="col-md-12">
-        <?php require VIEWS_PATH . 'includes/messages.phtml';?>
+    <div class="row">
+        <div class="col-md-12">
+            <?php require VIEWS_PATH . 'includes/messages.phtml';?>
+        </div>
     </div>
 
     <div class="col-md-12">
@@ -18,6 +20,7 @@
                     <th>#</th>
                     <th>Nome</th>
                     <th>Preço</th>
+                    <th>Status</th>
                     <th>Criado em</th>
                     <th></th>
                 </tr>
@@ -28,6 +31,7 @@
                         <td><?=$p['id'];?></td>
                         <td><?=$p['name'];?></td>
                         <td><?=number_format($p['price'], 2, ',', '.');?></td>
+                        <td><?=$p['is_active'] ? '<span class="label label-success">Ativo</span>' : '<span class="label label-danger">Inativo</span>';?></td>
                         <td><?=date('d/m/Y H:i:s', strtotime($p['created_at']));?></td>
                         <td>
                             <a href="<?=HOME;?>/admin/products/edit/<?=$p['id'];?>" class="btn btn-default">

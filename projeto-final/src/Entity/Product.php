@@ -6,5 +6,10 @@ use Code\DB\Entity;
 class Product extends Entity
 {
     protected $table = 'products';
-    protected $filters = [];
+    public static $filters = [
+        'name' => FILTER_SANITIZE_STRING,
+        'description' => FILTER_SANITIZE_STRING,
+        'content' => FILTER_SANITIZE_STRING,
+        'price' => FILTER_SANITIZE_NUMBER_FLOAT
+    ];
 }
