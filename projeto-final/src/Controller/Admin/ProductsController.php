@@ -79,6 +79,7 @@ class ProductsController
     {
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $images = $_FILES['images'];
 
             $data = Sanitizer::sanitizeData($data, Product::$filters);
 
@@ -98,6 +99,27 @@ class ProductsController
             if(!$product->update($data)) {
                 Flash::add('error', 'Erro ao atualizar produto!');
                 return header('Location: ' . HOME . '/admin/products/edit/' . $id);
+            }
+
+            if (isset($images['name']) && $images['name']) {
+
+                if (!Validator::validateImagesFile($images)) {
+                    Flash::add('error', 'Imagens enviadas não são válidas!');
+                    return header('Location: ' . HOME . '/admin/products/new');
+                }
+
+                $upload = new Upload();
+                $upload->setFolder(UPLOAD_PATH . DS . 'products' . DS);
+                $images = $upload->doUpload($images);
+
+                foreach ($images as $image) {
+                    $imagesData = [];
+                    $imagesData['product_id'] = $id;
+                    $imagesData['image'] = $image;
+
+                    $productImage = new ProductImage(Connection::getInstance());
+                    $productImage->insert($imagesData);
+                }
             }
 
             Flash::add('success', 'Produto atualizado com sucesso!');
