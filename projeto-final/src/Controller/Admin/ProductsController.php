@@ -33,7 +33,10 @@ class ProductsController
             }
 
             $data['slug'] = (new SlugGenerator())->generate($data['name']);
-            $data['price'] = number_format($data['price'], 2, '.', '');
+            $data['price'] = str_replace('.', '', $data['price']);
+            $data['price'] = str_replace(',', '.', $data['price']);
+
+            $data['is_active'] = $data['is_active'] == 'A' ? 1 : 0;
 
             $product = new Product(Connection::getInstance());
 
@@ -61,7 +64,10 @@ class ProductsController
             }
 
             $data['id'] = (int) $id;
-            $data['price'] = number_format($data['price'], 2, '.', '');
+            $data['price'] = str_replace('.', '', $data['price']);
+            $data['price'] = str_replace(',', '.', $data['price']);
+
+            $data['is_active'] = $data['is_active'] == 'A' ? 1 : 0;
 
             $product = new Product(Connection::getInstance());
 
@@ -78,6 +84,29 @@ class ProductsController
         $view->product = (new Product(Connection::getInstance()))->find($id);
 
         return $view->render();
+    }
+
+    public function remove($id = null)
+    {
+        try{
+            $post = new Product(Connection::getInstance());
+
+            if(!$post->delete($id)) {
+                Flash::add('error', 'Erro ao realizar remoção do produto!');
+                return header('Location: ' . HOME . '/admin/products');
+            }
+
+            Flash::add('success', 'Produto removido com sucesso!');
+            return header('Location: ' . HOME . '/admin/products');
+
+        } catch (\Exception $e) {
+            if(APP_DEBUG) {
+                Flash::add('error', $e->getMessage());
+                return header('Location: ' . HOME . '/admin/products');
+            }
+            Flash::add('error', 'Ocorreu um problema interno, por favor contacte o admin.');
+            return header('Location: ' . HOME . '/admin/products');
+        }
     }
 
 

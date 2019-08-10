@@ -116,7 +116,7 @@ class CategoriesController
 			$post = new Category(Connection::getInstance());
 
 			if(!$post->delete($id)) {
-				Flash::add('error', 'Erro ao realizar remoção do categoria!');
+				Flash::add('error', 'Erro ao realizar remoção da categoria!');
 				return header('Location: ' . HOME . '/categories');
 			}
 
