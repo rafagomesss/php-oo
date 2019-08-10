@@ -24,4 +24,16 @@ class Validator
 	{
 		return strlen($string) >= 6;
 	}
+
+	public static function validateImagesFile($files = []): bool
+	{
+		$allowedImagesFile = ['image/jpeg', 'image/png', 'image/jpg'];
+		for ($i = 0; $i < count($files['type']); $i++) {
+			if (!in_array($files['type'][$i], $allowedImagesFile)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
