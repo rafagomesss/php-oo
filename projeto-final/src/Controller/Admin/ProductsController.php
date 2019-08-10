@@ -52,6 +52,14 @@ class ProductsController
     {
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = Sanitizer::sanitizeData($data, Product::$filters);
+
+            if(!Validator::validateRequiredFields($data)) {
+                Flash::add('warning', 'Preencha todos os campos!');
+                return header('Location: ' . HOME . '/admin/products/edit/' . $id);
+            }
+
             $data['id'] = (int) $id;
             $data['price'] = number_format($data['price'], 2, '.', '');
 

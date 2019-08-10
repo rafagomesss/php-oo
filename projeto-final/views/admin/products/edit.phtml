@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Preço</label>
-                                <input name="price" class="form-control" type="text" value="<?=$this->product['price'];?>">
+                                <input name="price" class="form-control" type="text" value="<?=number_format($this->product['price'], 2, ',', '.');?>">
                             </div>
                         </div>
                         <div class="col-md-6">

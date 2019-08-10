@@ -10,6 +10,6 @@ class Product extends Entity
         'name' => FILTER_SANITIZE_STRING,
         'description' => FILTER_SANITIZE_STRING,
         'content' => FILTER_SANITIZE_STRING,
-        'price' => FILTER_SANITIZE_NUMBER_FLOAT
+        'price' => ['filter' => FILTER_SANITIZE_NUMBER_FLOAT, 'flags' => FILTER_FLAG_ALLOW_THOUSAND]
     ];
 }
