@@ -101,11 +101,19 @@ abstract class Entity
 		return $update->execute();
 	}
 
-	public function delete(int $id): bool
+	public function delete($id): bool
 	{
-		$sql = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+		if (is_array($id)) {
+			$bind = $id;
+			$field = array_keys($id)[0];
+		} else {
+			$bind = ['id' => $id];
+			$field = 'id';
+		}
 
-		$delete = $this->bind($sql, ['id' => $id]);
+		$sql = 'DELETE FROM ' . $this->table . ' WHERE ' . $field . ' = :' . $field;
+
+		$delete = $this->bind($sql, $bind);
 
 		return $delete->execute();
 	}
