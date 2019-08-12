@@ -3,7 +3,9 @@ namespace Code\Controller\Admin;
 
 use Ausi\SlugGenerator\SlugGenerator;
 use Code\DB\Connection;
+use Code\Entity\Category;
 use Code\Entity\Product;
+use Code\Entity\ProductCategory;
 use Code\Entity\ProductImage;
 use Code\Security\Validator\Sanitizer;
 use Code\Security\Validator\Validator;
@@ -26,6 +28,8 @@ class ProductsController
 
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $categories = $data['categories'];
             $images = $_FILES['images'];
 
             $data = Sanitizer::sanitizeData($data, Product::$filters);
@@ -69,10 +73,24 @@ class ProductsController
                 }
             }
 
+            if (count($categories)) {
+                foreach ($categories as $category) {
+                    $productCategory = new ProductCategory(Connection::getInstance());
+                    $productCategory->insert([
+                        'product_id' => $productId,
+                        'category_id' => $category
+                    ]);
+                }
+            }
+
             Flash::add('success', 'Produto criado com sucesso!');
             return header('Location: ' . HOME . '/admin/products');
         }
-        return (new View('admin' . DS . 'products' . DS . 'new.phtml'))->render();
+
+        $view = new View('admin' . DS . 'products' . DS . 'new.phtml');
+        $view->categories = (new Category(Connection::getInstance()))->findAll();
+
+        return $view->render();
     }
 
     public function edit($id = null)
