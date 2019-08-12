@@ -1,68 +1,85 @@
 <?php require VIEWS_PATH . DS . 'admin' . DS . 'includes' . DS . 'header.phtml'; ?>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Editar Produto</h2>
-                <hr>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Editar Produto</h2>
+            <hr>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <?php require VIEWS_PATH . 'includes/messages.phtml';?>
-            </div>
-        </div>
-
-        <div class="row">
-            <form action="<?=HOME;?>/admin/products/edit/<?=$this->product['id'];?>" method="POST">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Nome do produto</label>
-                        <input name="name" class="form-control" type="text" value="<?=$this->product['name'];?>">
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Descrição</label>
-                        <input name="description" class="form-control" type="text" value="<?=$this->product['description'];?>">
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Conteúdo</label>
-                        <textarea name="content" class="form-control" rows="5"><?=$this->product['content'];?></textarea>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Preço</label>
-                                <input name="price" class="form-control" type="text" value="<?=number_format($this->product['price'], 2, ',', '.');?>">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Status produto</label>
-                                <select name="is_active" class="form-control">
-                                    <option value="A" <?php if ($this->product['is_active']) : ?> selected <?php endif; ?>>Ativo</option>
-                                    <option value="I" <?php if (!$this->product['is_active']) : ?> selected <?php endif; ?>>Inativo</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-lg btn-success pull-right">Alterar Produto</button>
-                </div>
-            </form>
-
-
-        </div>
-
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php require VIEWS_PATH . 'includes/messages.phtml';?>
+        </div>
+    </div>
+
+    <div class="row">
+        <form action="<?=HOME;?>/admin/products/edit/<?=$this->product['id'];?>" method="POST" enctype="multipart/form-data">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Nome do produto</label>
+                    <input name="name" class="form-control" type="text" value="<?=$this->product['name'];?>">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <input name="description" class="form-control" type="text" value="<?=$this->product['description'];?>">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Conteúdo</label>
+                    <textarea name="content" class="form-control" rows="5"><?=$this->product['content'];?></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Preço</label>
+                            <input name="price" class="form-control" type="text" value="<?=number_format($this->product['price'], 2, ',', '.');?>">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Status produto</label>
+                            <select name="is_active" class="form-control">
+                                <option value="A" <?php if ($this->product['is_active']) : ?> selected <?php endif; ?>>Ativo</option>
+                                <option value="I" <?php if (!$this->product['is_active']) : ?> selected <?php endif; ?>>Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Selecione as imagens do produto</label>
+                    <input name="images[]" class="form-control" type="file" multiple>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-lg btn-success pull-right">Alterar Produto</button>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Imagens do produto</h2>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <?php foreach ($this->product['images'] as $image) : ?>
+            <div class="col-md-3">
+                <img src="<?=HOME;?>/uploads/products/<?= $image['image'];?>" alt="Imagem do produto <?= $this->product['name'];?>" class="img-responsive">
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
 <?php require VIEWS_PATH . 'admin/includes/footer.phtml';?>

@@ -105,7 +105,7 @@ class ProductsController
 
                 if (!Validator::validateImagesFile($images)) {
                     Flash::add('error', 'Imagens enviadas não são válidas!');
-                    return header('Location: ' . HOME . '/admin/products/new');
+                    return header('Location: ' . HOME . '/admin/products/edit/' . $id);
                 }
 
                 $upload = new Upload();
@@ -127,7 +127,7 @@ class ProductsController
         }
 
         $view = (new View('admin' . DS . 'products' . DS . 'edit.phtml'));
-        $view->product = (new Product(Connection::getInstance()))->find($id);
+        $view->product = (new Product(Connection::getInstance()))->getProductsWithImages($id);
 
         return $view->render();
     }
