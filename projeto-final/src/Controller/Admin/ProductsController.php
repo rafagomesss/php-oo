@@ -52,7 +52,7 @@ class ProductsController
                 return header('Location: ' . HOME . '/admin/products/new');
             }
 
-            if (isset($images['name']) && $images['name']) {
+            if (isset($images['name'][0]) && $images['name'][0]) {
 
                 if (!Validator::validateImagesFile($images)) {
                     Flash::add('error', 'Imagens enviadas não são válidas!');
@@ -124,7 +124,7 @@ class ProductsController
             $productCategory = new ProductCategory(Connection::getInstance());
             $productCategory->sync($id, $categories);
 
-            if (isset($images['name']) && $images['name']) {
+            if (isset($images['name'][0]) && $images['name'][0]) {
 
                 if (!Validator::validateImagesFile($images)) {
                     Flash::add('error', 'Imagens enviadas não são válidas!');
